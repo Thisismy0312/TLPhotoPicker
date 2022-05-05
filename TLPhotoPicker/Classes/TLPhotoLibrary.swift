@@ -14,7 +14,7 @@ protocol TLPhotoLibraryDelegate: AnyObject {
     func loadCompleteAllCollection(collections: [TLAssetsCollection])
 }
 
-class TLPhotoLibrary {
+open class TLPhotoLibrary {
     
     weak var delegate: TLPhotoLibraryDelegate? = nil
     
@@ -25,8 +25,11 @@ class TLPhotoLibrary {
     internal var assetCollections: [PHFetchResult<PHAssetCollection>] = []
     internal var albums: PHFetchResult<PHCollection>? = nil
     
-    deinit {
-        //        print("deinit TLPhotoLibrary")
+//    deinit {
+//        //        print("deinit TLPhotoLibrary")
+//    }
+    
+    public init() {
     }
     
     @discardableResult
@@ -59,7 +62,7 @@ class TLPhotoLibrary {
     }
     
     @discardableResult
-    func imageAsset(asset: PHAsset, size: CGSize = CGSize(width: 160, height: 160), options: PHImageRequestOptions? = nil, completionBlock:@escaping (UIImage,Bool)-> Void ) -> PHImageRequestID {
+    public func imageAsset(asset: PHAsset, size: CGSize = CGSize(width: 160, height: 160), options: PHImageRequestOptions? = nil, completionBlock:@escaping (UIImage,Bool)-> Void ) -> PHImageRequestID {
         var options = options
         if options == nil {
             options = PHImageRequestOptions()
