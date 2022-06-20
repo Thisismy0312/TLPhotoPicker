@@ -62,7 +62,7 @@ open class TLPhotoLibrary {
     }
     
     @discardableResult
-    public func imageAsset(asset: PHAsset, size: CGSize = CGSize(width: 160, height: 160), options: PHImageRequestOptions? = nil, completionBlock:@escaping (UIImage,Bool)-> Void ) -> PHImageRequestID {
+    public func imageAsset(asset: PHAsset, size: CGSize = CGSize(width: 160, height: 160), options: PHImageRequestOptions? = nil, completionBlock:@escaping (UIImage?, Bool)-> Void ) -> PHImageRequestID {
         var options = options
         if options == nil {
             options = PHImageRequestOptions()
@@ -74,10 +74,7 @@ open class TLPhotoLibrary {
         let scale = min(UIScreen.main.scale,2)
         let targetSize = CGSize(width: size.width*scale, height: size.height*scale)
         let requestID = self.imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: options) { image, info in
-            let complete = (info?["PHImageResultIsDegradedKey"] as? Bool) == false
-            if let image = image {
-                completionBlock(image,complete)
-            }
+            completionBlock(image, true)
         }
         return requestID
     }
